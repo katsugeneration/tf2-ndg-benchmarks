@@ -2,7 +2,8 @@ version: 2
 
 python:
   version: 3.7
-  - method: pip
-    install: .
-    extra_requirements:
-      - docs
+  install:
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs
