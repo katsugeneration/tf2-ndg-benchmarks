@@ -1,8 +1,17 @@
-# tf2-ndg-benchmarks
-Neural Dialogue Generation Benchmarks implemented TensorFlow 2.0
+<!---
+   tf2-ndg-benchmarks documentation master file, created by
+   sphinx-quickstart on Mon Nov 11 10:07:49 2019.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+--->
 
-![](https://github.com/katsugeneration/tf2-ndg-benchmarks/workflows/build/badge.svg)
-[![Documentation Status](https://readthedocs.org/projects/tf2-ndg-benchmarks/badge/?version=latest)](https://tf2-ndg-benchmarks.readthedocs.io/en/latest/?badge=latest)
+# Welcome to tf2-ndg-benchmarks's documentation!
+
+```eval_rst
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+```
 
 # Usage
 
@@ -25,4 +34,13 @@ reference = ['It', 'is', 'a', 'guide', 'to', 'action', 'that',
     'heed', 'Party', 'commands']
 bleu = metrics.Bleu()
 score = bleu.sentence_score(reference, hypothesis)
+```
+
+
+# Indices and tables
+
+```eval_rst
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 ```
