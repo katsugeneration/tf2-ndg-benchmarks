@@ -1,6 +1,13 @@
 tf2\_ndg\_benckmarks package
 ============================
 
+Subpackages
+-----------
+
+.. toctree::
+
+   tf2_ndg_benckmarks.metrics
+
 Module contents
 ---------------
 
