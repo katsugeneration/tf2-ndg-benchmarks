@@ -46,12 +46,11 @@ class Bleu(object):
             float: Sentence BLEU score
 
         """
-        N = 4
         precision = np.exp(sum(
-            [1./float(N) * np.log(
-                len(set(self._count_ngram(n, hypothesis).keys()) & set(self._count_ngram(n, reference).keys())) /
-                sum(self._count_ngram(n, hypothesis).values()))
-                for n in range(1, N+1)]))
+            [1./float(n) * np.log(
+                len(set(self._count_ngram(i, hypothesis).keys()) & set(self._count_ngram(i, reference).keys())) /
+                sum(self._count_ngram(i, hypothesis).values()))
+                for i in range(1, n+1)]))
 
         c = float(len(hypothesis.split(' ')))
         r = float(abs(len(reference.split(' '))))
