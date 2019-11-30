@@ -27,3 +27,12 @@ class TestRouge:
         rouge_calc = RougeCalculator(stopwords=False, lang="en")
         expect = rouge_calc.rouge_n(hypothesis, reference, n=2)
         eq_(expect, scorer.sentence_score(reference, hypothesis, n=2))
+
+    def test_sentence_score_L(self):
+        reference = 'It\'s my living town'
+        hypothesis = 'I went to the Mars from my living town.'
+        scorer = rouge.Rouge()
+
+        rouge_calc = RougeCalculator(stopwords=False, lang="en")
+        expect = rouge_calc.rouge_l(hypothesis, reference)
+        eq_(expect, scorer.sentence_score(reference, hypothesis, mode='L'))
