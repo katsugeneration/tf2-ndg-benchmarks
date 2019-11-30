@@ -18,3 +18,12 @@ class TestRouge:
         rouge_calc = RougeCalculator(stopwords=False, lang="en")
         expect = rouge_calc.rouge_n(hypothesis, reference, n=1)
         eq_(expect, scorer.sentence_score(reference, hypothesis))
+
+    def test_sentence_score_N_2(self):
+        reference = 'I went to Mars'
+        hypothesis = 'I went to the Mars from my living town.'
+        scorer = rouge.Rouge()
+
+        rouge_calc = RougeCalculator(stopwords=False, lang="en")
+        expect = rouge_calc.rouge_n(hypothesis, reference, n=2)
+        eq_(expect, scorer.sentence_score(reference, hypothesis, n=2))
