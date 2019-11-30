@@ -64,6 +64,16 @@ class EmbeddingBase(object):
         self.model = KeyedVectors.load_word2vec_format(self.emb_path, binary=True)
         assert 'dog' in self.model
 
+    def _get_vectors_from_sentene(self, sentence):
+        """Return contains word vector list."""
+        return [self.model.get_vector(w) for w in sentence.split(' ') if w in self.model]
+
+    def _calc_cosine_sim(self, vectors1, vectors2):
+        """Calculate cosine similarity."""
+        vectors1 /= np.linalg.norm(vectors1, axis=-1)
+        vectors2 /= np.linalg.norm(vectors2, axis=-1)
+        return np.dot(vectors1, vectors2)
+
 
 class Average(EmbeddingBase):
     """Embedding based average score calculator."""
@@ -82,20 +92,9 @@ class Average(EmbeddingBase):
             float: Embedding Average score
 
         """
-        emb_ref = np.zeros((self.model.vector_size, ))
-        emb_hyp = np.zeros((self.model.vector_size, ))
-
-        for w in reference.split(' '):
-            if w in self.model:
-                emb_ref += self.model.get_vector(w)
-        for w in hypothesis.split(' '):
-            if w in self.model:
-                emb_hyp += self.model.get_vector(w)
-
-        emb_ref /= np.linalg.norm(emb_ref)
-        emb_hyp /= np.linalg.norm(emb_hyp)
-
-        return np.dot(emb_ref, emb_hyp)
+        emb_ref = np.sum(self._get_vectors_from_sentene(reference), axis=0)
+        emb_hyp = np.sum(self._get_vectors_from_sentene(hypothesis), axis=0)
+        return self._calc_cosine_sim(emb_ref, emb_hyp)
 
 
 class VectorExtrema(EmbeddingBase):
@@ -115,18 +114,11 @@ class VectorExtrema(EmbeddingBase):
             float: Embedding Vector Extrema score
 
         """
-        vectors_ref = [self.model.get_vector(w) for w in reference if w in self.model]
-        vectors_hyp = [self.model.get_vector(w) for w in hypothesis if w in self.model]
-
         def extema(vectors):
             vec_max = np.max(vectors, axis=0)
             vec_min = np.min(vectors, axis=0)
             return list(map(lambda x, y: x if np.abs(x) > np.abs(y) else y, vec_max, vec_min))
 
-        extema_ref = extema(vectors_ref)
-        extema_hyp = extema(vectors_hyp)
-
-        extema_ref /= np.linalg.norm(extema_ref)
-        extema_hyp /= np.linalg.norm(extema_hyp)
-
-        return np.dot(extema_ref, extema_hyp)
+        extema_ref = extema(self._get_vectors_from_sentene(reference))
+        extema_hyp = extema(self._get_vectors_from_sentene(hypothesis))
+        return self._calc_cosine_sim(extema_ref, extema_hyp)
