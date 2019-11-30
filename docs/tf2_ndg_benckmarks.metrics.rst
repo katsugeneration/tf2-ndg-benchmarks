@@ -19,6 +19,14 @@ tf2\_ndg\_benckmarks.metrics.bleu module
    :undoc-members:
    :show-inheritance:
 
+tf2\_ndg\_benckmarks.metrics.embedding module
+---------------------------------------------
+
+.. automodule:: tf2_ndg_benckmarks.metrics.embedding
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tf2\_ndg\_benckmarks.metrics.rouge module
 -----------------------------------------
 

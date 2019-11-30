@@ -66,7 +66,7 @@ class EmbeddingBase(object):
 
 
 class Average(EmbeddingBase):
-    """BLEU score calculator."""
+    """Embedding based average score calculator."""
 
     def sentence_score(
             self,
