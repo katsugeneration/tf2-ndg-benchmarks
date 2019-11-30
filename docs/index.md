@@ -26,9 +26,9 @@ Run under python code for using metrics.
 ```python
 from tf2-ndg-benchmarks import metrics
 
-hypothesis = 'It is a guide to action that ensures that the military will forever heed Party commands'
 reference = 'It is a guide to action that ensures that the military will forever heed Party commands'
-bleu = metrics.Bleu()
+hypothesis = 'It is a guide to action which ensures that the military always obeys the commands of the party'
+bleu = metrics.bleu.Bleu()
 score = bleu.sentence_score(reference, hypothesis)
 ```
 
