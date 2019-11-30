@@ -13,3 +13,4 @@ class TestBase:
     def test_load(self):
         base = embedding.EmbeddingBase()
         ok_(os.path.exists(base.emb_path))
+        ok_(base.model)
