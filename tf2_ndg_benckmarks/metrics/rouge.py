@@ -13,12 +13,14 @@ class Rouge(object):
     def sentence_score(
             self,
             reference: str,
-            hypothesis: str) -> float:
+            hypothesis: str,
+            n: int = 1) -> float:
         """Sentece ROUGE metrics.
 
         Args:
             reference (str): reference sentence.
             hypothesis: (str): hypothesis sentence.
+            n (int): n-gram's n.
 
         Return:
             float: Sentence ROUGE score
