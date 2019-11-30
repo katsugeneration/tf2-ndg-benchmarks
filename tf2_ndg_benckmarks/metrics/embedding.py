@@ -16,7 +16,7 @@ SOURCE_URL = 'https://drive.google.com/uc?export=download&id={file_id}'
 SOURCE_URL_WITH_CONFIRM = 'https://drive.google.com/uc?export=download&confirm={code}&id={file_id}'
 
 
-class EmbeddingBase:
+class EmbeddingBase(object):
     """Embedding based score calculator base."""
 
     def __init__(self):
@@ -62,3 +62,23 @@ class EmbeddingBase:
         """Load word2vec model."""
         self.model = KeyedVectors.load_word2vec_format(self.emb_path, binary=True)
         assert 'dog' in self.model
+
+
+class Average(object):
+    """BLEU score calculator."""
+
+    def sentence_score(
+            self,
+            reference: str,
+            hypothesis: str) -> float:
+        """Sentece Embedding Average metrics.
+
+        Args:
+            reference (str): reference sentence.
+            hypothesis: (str): hypothesis sentence.
+
+        Return:
+            float: Sentence Embedding Average score
+
+        """
+        return 0.0
