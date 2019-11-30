@@ -4,6 +4,7 @@ Copyright:
 License:
     MIT, see LICENSE for details.
 """
+from collections import Counter
 
 
 class Rouge(object):
@@ -13,14 +14,20 @@ class Rouge(object):
             self,
             reference: str,
             hypothesis: str) -> float:
-        """Sentece BLEU metrics.
+        """Sentece ROUGE metrics.
 
         Args:
             reference (str): reference sentence.
             hypothesis: (str): hypothesis sentence.
 
         Return:
-            float: Sentence BLEU score
+            float: Sentence ROUGE score
 
         """
-        return 0.0
+        count_ref = Counter(reference.split(' '))
+        count_hyp = Counter(hypothesis.split(' '))
+        matched = set(count_ref.keys()) & set(count_hyp.keys())
+
+        precision = float(len(matched) / len(count_hyp))
+        recall = float(len(matched) / len(count_ref))
+        return (precision * recall) / ((1 - 0.5) * precision + 0.5 * recall)
