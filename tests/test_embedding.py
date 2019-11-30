@@ -9,6 +9,7 @@ import os
 from tf2_ndg_benckmarks.metrics import embedding
 
 
-def test_load():
-    base = embedding.EmbeddingBase()
-    ok_(os.path.exists(base.emb_path))
+class TestBase:
+    def test_load(self):
+        base = embedding.EmbeddingBase()
+        ok_(os.path.exists(base.emb_path))
