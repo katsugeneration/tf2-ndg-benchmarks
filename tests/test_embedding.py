@@ -34,3 +34,13 @@ class TestVectorExtrema:
 
         ok_(scorer.sentence_score(reference, reference) - 1.0 <= 0.000001)
         ok_(scorer.sentence_score(reference, hypothesis) > 0.0)
+
+
+class TestGreedyMatching:
+    def test_sentence_score(self):
+        reference = 'It is a guide to action that ensures that the military will forever heed Party commands'
+        hypothesis = 'It is a guide to action which ensures that the military always obeys the commands of the party'
+        scorer = embedding.GreedyMatching()
+
+        ok_(scorer.sentence_score(reference, reference) - 1.0 <= 0.000001)
+        ok_(scorer.sentence_score(reference, hypothesis) > 0.0)
