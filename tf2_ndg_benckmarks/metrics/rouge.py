@@ -10,6 +10,25 @@ from collections import Counter
 class Rouge(object):
     """ROUGE score calculator."""
 
+    def _count_ngram(
+            self,
+            n: int,
+            target: str) -> Counter:
+        """Count n-gram.
+
+        Args:
+            n (int): n-gram's n.
+            target: (str): target sentence.
+
+        Return:
+            Counter: python counter object.
+
+        """
+        tokens = target.split(' ')
+        N = len(tokens)
+        counter = Counter(map(lambda x: ' '.join(x), zip(*[tokens[i:N-n+i+1] for i in range(n)])))
+        return counter
+
     def sentence_score(
             self,
             reference: str,
@@ -26,8 +45,8 @@ class Rouge(object):
             float: Sentence ROUGE score
 
         """
-        count_ref = Counter(reference.split(' '))
-        count_hyp = Counter(hypothesis.split(' '))
+        count_ref = self._count_ngram(n, reference)
+        count_hyp = self._count_ngram(n, hypothesis)
         matched = set(count_ref.keys()) & set(count_hyp.keys())
 
         precision = float(len(matched) / len(count_hyp))
