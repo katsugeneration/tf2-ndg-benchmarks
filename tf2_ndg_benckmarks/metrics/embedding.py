@@ -79,7 +79,7 @@ class Average(EmbeddingBase):
             hypothesis: (str): hypothesis sentence.
 
         Return:
-            float: Sentence Embedding Average score
+            float: Embedding Average score
 
         """
         emb_ref = np.zeros((self.model.vector_size, ))
@@ -96,3 +96,23 @@ class Average(EmbeddingBase):
         emb_hyp /= np.linalg.norm(emb_hyp)
 
         return np.dot(emb_ref, emb_hyp)
+
+
+class VectorExtrema(EmbeddingBase):
+    """Embedding based vector extrema score calculator."""
+
+    def sentence_score(
+            self,
+            reference: str,
+            hypothesis: str) -> float:
+        """Sentece Embedding Vector Extrema metrics.
+
+        Args:
+            reference (str): reference sentence.
+            hypothesis: (str): hypothesis sentence.
+
+        Return:
+            float: Embedding Vector Extrema score
+
+        """
+        return 0.0
