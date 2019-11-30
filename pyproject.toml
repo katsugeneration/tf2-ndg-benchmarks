@@ -8,6 +8,9 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.7"
 numpy = "^1.17"
+requests = "^2.22"
+tqdm = "^4.39"
+gensim = "^3.8"
 
 [tool.poetry.dev-dependencies]
 pydocstyle = "^4.0"
