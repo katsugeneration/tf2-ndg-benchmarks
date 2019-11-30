@@ -70,9 +70,9 @@ class EmbeddingBase(object):
 
     def _calc_cosine_sim(self, vectors1, vectors2):
         """Calculate cosine similarity."""
-        vectors1 /= np.linalg.norm(vectors1, axis=-1)
-        vectors2 /= np.linalg.norm(vectors2, axis=-1)
-        return np.dot(vectors1, vectors2)
+        vectors1 /= np.linalg.norm(vectors1, axis=-1, keepdims=True)
+        vectors2 /= np.linalg.norm(vectors2, axis=-1, keepdims=True)
+        return np.dot(vectors1, vectors2.T)
 
 
 class Average(EmbeddingBase):
@@ -141,4 +141,10 @@ class GreedyMatching(EmbeddingBase):
             float: Embedding Greedy Matching score
 
         """
-        return 0.0
+        embs_ref = np.array(self._get_vectors_from_sentene(reference))
+        embs_hyp = np.array(self._get_vectors_from_sentene(hypothesis))
+
+        cs_matrix = self._calc_cosine_sim(embs_ref, embs_hyp)  # len(embs_ref) x len(embs_hyp) matrix
+        greedy_ref = np.max(cs_matrix, axis=0).mean()
+        greedy_hyp = np.max(cs_matrix, axis=1).mean()
+        return (greedy_ref + greedy_hyp) / 2.0
