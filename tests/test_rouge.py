@@ -29,7 +29,7 @@ class TestRouge:
         eq_(expect, scorer.sentence_score(reference, hypothesis, n=2))
 
     def test_sentence_score_L(self):
-        reference = 'It\'s my living town'
+        reference = 'It \'s my living town'
         hypothesis = 'I went to the Mars from my living town.'
         scorer = rouge.Rouge()
 
