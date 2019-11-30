@@ -8,6 +8,7 @@ import pathlib
 import gzip
 import requests
 import tqdm
+import numpy as np
 from gensim.models import KeyedVectors
 
 
@@ -64,7 +65,7 @@ class EmbeddingBase(object):
         assert 'dog' in self.model
 
 
-class Average(object):
+class Average(EmbeddingBase):
     """BLEU score calculator."""
 
     def sentence_score(
@@ -81,4 +82,17 @@ class Average(object):
             float: Sentence Embedding Average score
 
         """
-        return 0.0
+        emb_ref = np.zeros((self.model.vector_size, ))
+        emb_hyp = np.zeros((self.model.vector_size, ))
+
+        for w in reference.split(' '):
+            if w in self.model:
+                emb_ref += self.model.get_vector(w)
+        for w in hypothesis.split(' '):
+            if w in self.model:
+                emb_hyp += self.model.get_vector(w)
+
+        emb_ref /= np.linalg.norm(emb_ref)
+        emb_hyp /= np.linalg.norm(emb_hyp)
+
+        return np.dot(emb_ref, emb_hyp)

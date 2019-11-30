@@ -4,7 +4,7 @@ Copyright:
 License:
     MIT, see LICENSE for details.
 """
-from nose.tools import ok_, eq_
+from nose.tools import ok_
 import os
 from tf2_ndg_benckmarks.metrics import embedding
 
@@ -22,5 +22,5 @@ class TestAverage:
         hypothesis = 'It is a guide to action which ensures that the military always obeys the commands of the party'
         scorer = embedding.Average()
 
-        eq_(1.0, scorer.sentence_score(reference, reference))
+        ok_(scorer.sentence_score(reference, reference) - 1.0 <= 0.000001)
         ok_(scorer.sentence_score(reference, hypothesis) > 0.0)
