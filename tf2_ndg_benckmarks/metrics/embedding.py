@@ -115,4 +115,18 @@ class VectorExtrema(EmbeddingBase):
             float: Embedding Vector Extrema score
 
         """
-        return 0.0
+        vectors_ref = [self.model.get_vector(w) for w in reference if w in self.model]
+        vectors_hyp = [self.model.get_vector(w) for w in hypothesis if w in self.model]
+
+        def extema(vectors):
+            vec_max = np.max(vectors, axis=0)
+            vec_min = np.min(vectors, axis=0)
+            return list(map(lambda x, y: x if np.abs(x) > np.abs(y) else y, vec_max, vec_min))
+
+        extema_ref = extema(vectors_ref)
+        extema_hyp = extema(vectors_hyp)
+
+        extema_ref /= np.linalg.norm(extema_ref)
+        extema_hyp /= np.linalg.norm(extema_hyp)
+
+        return np.dot(extema_ref, extema_hyp)
