@@ -82,7 +82,7 @@ class Average(EmbeddingBase):
             self,
             reference: str,
             hypothesis: str) -> float:
-        """Sentece Embedding Average metrics.
+        """Embedding Average metrics.
 
         Args:
             reference (str): reference sentence.
@@ -104,7 +104,7 @@ class VectorExtrema(EmbeddingBase):
             self,
             reference: str,
             hypothesis: str) -> float:
-        """Sentece Embedding Vector Extrema metrics.
+        """Embedding Vector Extrema metrics.
 
         Args:
             reference (str): reference sentence.
@@ -122,3 +122,23 @@ class VectorExtrema(EmbeddingBase):
         extema_ref = extema(self._get_vectors_from_sentene(reference))
         extema_hyp = extema(self._get_vectors_from_sentene(hypothesis))
         return self._calc_cosine_sim(extema_ref, extema_hyp)
+
+
+class GreedyMatching(EmbeddingBase):
+    """Embedding based greedy matching score calculator."""
+
+    def sentence_score(
+            self,
+            reference: str,
+            hypothesis: str) -> float:
+        """Embedding greedy matching metrics.
+
+        Args:
+            reference (str): reference sentence.
+            hypothesis: (str): hypothesis sentence.
+
+        Return:
+            float: Embedding Greedy Matching score
+
+        """
+        return 0.0
