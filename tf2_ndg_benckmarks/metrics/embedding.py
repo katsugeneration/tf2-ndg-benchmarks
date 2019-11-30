@@ -22,6 +22,7 @@ class EmbeddingBase:
 
         emb_path = pathlib.Path(self.emb_path)
         if emb_path.exists():
+            self._load()
             return
 
         # Downloas Google pre-trained vector bin from Google Drive
@@ -45,3 +46,9 @@ class EmbeddingBase:
                 pbar.update(len(chunck))
         pbar.close()
         res.close()
+
+        self._load()
+
+    def _load(self):
+        """Load word2vec model."""
+        self.model = None
