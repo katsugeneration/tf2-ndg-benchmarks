@@ -14,12 +14,14 @@ class Rouge(object):
             self,
             reference: str,
             hypothesis: str,
+            mode: str = 'N',
             n: int = 1) -> float:
         """Sentece ROUGE metrics.
 
         Args:
             reference (str): reference sentence.
             hypothesis: (str): hypothesis sentence.
+            mode (str): rouge mode. 'N' or 'L' is supported.
             n (int): n-gram's n.
 
         Return:
