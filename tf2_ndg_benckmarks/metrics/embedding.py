@@ -20,15 +20,23 @@ SOURCE_URL_WITH_CONFIRM = 'https://drive.google.com/uc?export=download&confirm={
 class EmbeddingBase(object):
     """Embedding based score calculator base."""
 
-    def __init__(self):
-        self.emb_path = '/tmp/vector.bin'
+    def __init__(
+            self,
+            emb_path: str = '/tmp/vector.bin'):
+        """Embedding class initialization.
 
-        emb_path = pathlib.Path(self.emb_path)
-        if emb_path.exists():
+        Args:
+            emb_path (str): Embedding binary file path. When emb_path is not found, start to download from internet.
+
+        """
+        self.emb_path = emb_path
+
+        _emb_path = pathlib.Path(self.emb_path)
+        if _emb_path.exists():
             self._load()
             return
 
-        emb_gz_path = pathlib.Path(self.emb_path + '.gz')
+        _emb_gz_path = pathlib.Path(self.emb_path + '.gz')
 
         # Downloas Google pre-trained vector bin from Google Drive
 
@@ -45,7 +53,7 @@ class EmbeddingBase(object):
                     stream=True)
         pbar = tqdm.tqdm(unit="B", unit_scale=True, desc='Download Google news corpus pre-trained vectors.')
         chunck_size = 1024
-        with emb_gz_path.open('wb') as w:
+        with _emb_gz_path.open('wb') as w:
             for chunck in res.iter_content(chunck_size):
                 w.write(chunck)
                 pbar.update(len(chunck))
@@ -53,8 +61,8 @@ class EmbeddingBase(object):
         res.close()
 
         # Decompress gzip file.
-        with emb_gz_path.open('rb') as f:
-            with emb_path.open('wb') as w:
+        with _emb_gz_path.open('rb') as f:
+            with _emb_path.open('wb') as w:
                 w.write(gzip.decompress(f.read()))
 
         self._load()
