@@ -27,7 +27,7 @@ class Distinct(object):
         """
         count_hypotheses = []
         for h in hypotheses:
-            count_hypotheses.append(ngram.count_ngram(1, h))
+            count_hypotheses.append(ngram.count_ngram(n, h))
 
         distinct: Set[str] = set()
         for ch in count_hypotheses:
