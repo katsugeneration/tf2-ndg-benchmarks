@@ -13,11 +13,13 @@ class Distinct(object):
 
     def sentence_score(
             self,
-            hypotheses: List[str]) -> float:
+            hypotheses: List[str],
+            n: int = 1) -> float:
         """Sentece DISTINCT metrics.
 
         Args:
             hypotheses: (List[str]): hypothesis sentence.
+            n (int): n-gram's n.
 
         Return:
             float: Sentence DISTINCT score
