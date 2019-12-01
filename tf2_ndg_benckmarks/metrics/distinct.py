@@ -4,7 +4,8 @@ Copyright:
 License:
     MIT, see LICENSE for details.
 """
-from typing import List
+from tf2_ndg_benckmarks.metrics.utils import ngram
+from typing import List, Set
 
 
 class Distinct(object):
@@ -22,4 +23,12 @@ class Distinct(object):
             float: Sentence DISTINCT score
 
         """
-        return 0.0
+        count_hypotheses = []
+        for h in hypotheses:
+            count_hypotheses.append(ngram.count_ngram(1, h))
+
+        distinct: Set[str] = set()
+        for ch in count_hypotheses:
+            distinct |= set(ch.keys())
+        denom = sum(map(lambda v: sum(v.values()), count_hypotheses))
+        return float(len(distinct) / denom)
